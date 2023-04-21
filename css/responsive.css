@@ -146,6 +146,9 @@
     .tomato_one_caption2{
         padding-left: 14%;
     }
+    .btn_add_cart{
+        width: 240px;
+    }
 /***********************************************************************************/
     .tomato_one_all_characteristic{
         display: block;
@@ -176,7 +179,7 @@
     }
 }
 /*--------------------------------------------------------------------------------------------------------*/
-@media screen and (max-width: 380px) {
+@media screen and (max-width: 400px) {
     body{
         background: #EDEDED;
     }

@@ -44,16 +44,15 @@
         </nav>
     </header>
     
-    <nav class="_container_alt">
+    <nav class="_container_alt" id="app">
 
 
     <div class="tomato_one_caption_conteiner">
         <div class="tomato_one_caption_conteiner_1">
-            <a href="tomato.html"><img class="tomato_one_breadcrubs" src="images/png/breadcrumbs.png"></a>
+            <a href="tomato.html"><div class="tomato_one_breadcrubs"><img src="images/svg/arrow.svg"><h3>Return to All Grapes</h3></div></a>
             <div class="tomato_one_caption1">
-                <p class="tomato_one_caption1_1 __text_preset_1">TAG 1002 (TAG 809)</p>
-                <p class="tomato_one_caption1_2 __text_preset_1">Tomato Determinate
-                    Red Standard Round</p>
+                <p class="tomato_one_caption1_1 __text_preset_1"> {{ product.name }} </p>
+                <p class="tomato_one_caption1_2 __text_preset_1"> {{ product.short_text }} </p>
                 <img class="tomato_one_caption1_img" src="images/png/img_vision.png">
             </div>
         
@@ -62,7 +61,7 @@
                 <p class="tomato_one_caption2_1 __text_preset_1">Very high yield and excellent fruits quality!</p>
             </div>
         </div>
-        <div class="tomato_one_caption_conteiner_2"><img class="tomato_one_main_img" src="images/png/tomato_info.jpg"></div>
+        <div class="tomato_one_caption_conteiner_2"><img class="tomato_one_main_img" :src="'images/grapes_img/'+product.image"></div>
     </div>
 
 
@@ -119,7 +118,10 @@
 
         </div>
     
-        <div class="tomato_one_all_characteristic_column3"><a href="#"><img class="btn_export_to_pdf"src="images/png/Btn download pdf.png"></a></div> 
+        <div class="tomato_one_all_characteristic_column3">
+            <a href="#"><button v-on:click="addToCart(product.id)"  v-if="!btnVisible" class="btn_add_cart">Add to cart</button></a>
+            <a href="contact.html"><button  v-if="btnVisible" class="btn_add_cart">Go to cart</button></a>
+        </div> 
 
     </div>
 
@@ -157,5 +159,6 @@
             <p>AGRIDERA SEEDS & AGRICULTURE LTD. © 2020</p>
         </div>
     </footer>
+    <script src="js/main.js"></script>
 </body>
 </html>

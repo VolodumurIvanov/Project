@@ -79,11 +79,11 @@
 
         <nav class="tomato_main_info _container_alt" id="app">
     
-            <div class="tomato_info" v-for="product in products">
-                <a href="tomato_one.html"><img class="tomato_info_img" :src="'images/grapes_img/'+product.image"></a>
+            <div class="tomato_info" v-for="prod in products">
+                <a :href="'tomato_one.html#'+prod.id"><img class="tomato_info_img" :src="'images/grapes_img/'+prod.image"></a>
                 <div class="tomato_restangle_0">
-                    <p class="tomato_info_text __text_preset_1"><strong> {{product.name}} </strong></p>
-                    <p class="tomato_info_text __text_preset_1"> {{product.short_text}} </p>
+                    <p class="tomato_info_text __text_preset_1"><strong> {{prod.name}} </strong></p>
+                    <p class="tomato_info_text __text_preset_1"> {{prod.short_text}} </p>
                 </div>
             </div>
     

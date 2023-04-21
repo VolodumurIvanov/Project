@@ -7,38 +7,78 @@ var app = new Vue({
                 id:1, 
                 title:"Grape_Biancone",
                 name:"Biancone", 
-                short_text:'Biancone is a light-skinned grape variety from the Marche region of eastern central Italy, although it seems to have commanded greater respect in its newly adopted home in Australia. It produces relatively bright, fruit-driven wines in its Southern Hemisphere incarnation, and is particularly favored as an ingredient in sweet wine from Victoria, where some of the world finest Muscats are produced.',
+                short_text:'Biancone is a light-skinned grape.',
                 image:"01_Biancone.jpg",
                 desc:"Full desc"},
             {
                 id:2, 
                 title:"Grape_Brun-Fourca",
                 name:"Brun Fourca",
-                short_text:'Brun Fourca is an ancient red wine grape variety associated with wines of the miniscule Palette appellation in Provence, southern France. It is permitted as a minor constituent in both rosé and red wines from Palette, alongside the dominant Grenache, Syrah, Mourvèdre and Cinsault varieties.',
+                short_text:'Brun Fourca is an ancient red wine grape.',
                 image:"02_Brun-Fourca.jpg",
                 desc:"Full desc"},
             {
                 id:3, 
                 title:"Grape_Bigolona",
                 name:"Bigolona",
-                short_text:'Bigolona is an ancient and rare Italian white wine variety native to the northeastern Veneto region. It is particularly susceptible to Botrytis cinerea and thus is predominantly used in sweet passito wines – those made from grapes that are dried before fermentation.',
+                short_text:'Bigolona is an ancient and rare Italian white wine.',
                 image:"03_Bigolona.jpg",
                 desc:"Full desc"},
             {
                 id:4, 
                 title:"Grape_Abrustine",
                 name:"Abrustine",
-                short_text:'Abrustine (Abrostine) is an ancient – and near-extinct – red wine grape from Tuscany. At present just one producer, Podere Santa Felicità, is making wines from the variety.The wine, made from 100 percent',
+                short_text:'Abrustine (Abrostine) is an ancient – and near-extinct.',
                 image:"04_Abrustine.jpg",
                 desc:"Full desc"},
             {
                 id:5, 
                 title:"Grape_Rebo",
                 name:"Rebo",
-                short_text:"Rebo is a dark-skinned crossing of Merlot and Teroldego created by agronomist Rebo Rigotti in Trentino, Italy. Originally it was thought to be a crossing of Marzemino and Merlot, but genomic testing has since disproved this.",
+                short_text:"Rebo is a dark-skinned crossing of Merlot.",
                 image:"05_Rebo.jpg",
                 desc:"Full desc"}
-        ]
+        ],
+        product:[
+            {
+                id:0, 
+                title:"",
+                name:"", 
+                short_text:'',
+                image:"",
+                desc:""  
+            }
+        ],
+        btnVisible: false
+    },
+    methods:{
+        getProduct:function(){
+            if(window.location.hash){
+                var id = window.location.hash.replace('#','');
+                if(this.products && this.products.length>0){
+                    for(i in this.products){
+                        if(this.products[i] && this.products[i].id && id==this.products[i].id) this.product=this.products[i]
+                    }
+                }
+            }
+        },
+        addToCart:function(id){
+            var cart =[];
+            if(window.localStorage.getItem('cart')){
+                cart=window.localStorage.getItem('cart').split(',');
+            }
+            if(cart.indexOf(String(id))==-1){
+                cart.push(id);
+                window.localStorage.setItem('cart',cart.join());
+                this.btnVisible=true;
+            }
+        },
+        checkInCart:function(){
+            if(this.product && this.product.id && window.localStorage.getItem('cart').split(',').indexOf(String(this.product.id))!=-1) this.btnVisible=true
+        }
+    },
+    mounted: function(){
+        this.getProduct();
+        this.checkInCart();
     }
-
 })

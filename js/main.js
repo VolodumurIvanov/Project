@@ -39,16 +39,8 @@ var app = new Vue({
                 image:"05_Rebo.jpg",
                 desc:"Full desc"}
         ],
-        product:[
-            {
-                id:0, 
-                title:"",
-                name:"", 
-                short_text:'',
-                image:"",
-                desc:""  
-            }
-        ],
+        product:{},
+        cart:[],
         btnVisible: false
     },
     methods:{
@@ -75,6 +67,12 @@ var app = new Vue({
         },
         checkInCart:function(){
             if(this.product && this.product.id && window.localStorage.getItem('cart').split(',').indexOf(String(this.product.id))!=-1) this.btnVisible=true
+        },
+        getCart:function(){
+            var cart =[];
+            if(window.localStorage.getItem('cart')){
+                cart=window.localStorage.getItem('cart').split(',');
+            }
         }
     },
     mounted: function(){

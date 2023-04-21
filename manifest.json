@@ -83,12 +83,12 @@
         "type": "image/png"
     }
     ],
-    "start_url": "/",
+    "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#ffffff",
     "description": "Тут повинен бути опис сайту",
     "orientation": "portrait",
-    "scope": "/",
-    "lang": "uk-UA"
+    "scope": ".",
+    "lang": "en-US"
     }

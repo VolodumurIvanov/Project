@@ -1,4 +1,3 @@
-
 var app = new Vue({
     el:"#app",
     data:{
@@ -9,35 +8,40 @@ var app = new Vue({
                 name:"Biancone", 
                 short_text:'Biancone is a light-skinned grape.',
                 image:"01_Biancone.jpg",
-                desc:"Full desc"},
+                desc:"Full desc"
+            },
             {
                 id:2, 
                 title:"Grape_Brun-Fourca",
                 name:"Brun Fourca",
                 short_text:'Brun Fourca is an ancient red wine grape.',
                 image:"02_Brun-Fourca.jpg",
-                desc:"Full desc"},
+                desc:"Full desc"
+            },
             {
                 id:3, 
                 title:"Grape_Bigolona",
                 name:"Bigolona",
                 short_text:'Bigolona is an ancient and rare Italian white wine.',
                 image:"03_Bigolona.jpg",
-                desc:"Full desc"},
+                desc:"Full desc"
+            },
             {
                 id:4, 
                 title:"Grape_Abrustine",
                 name:"Abrustine",
                 short_text:'Abrustine (Abrostine) is an ancient – and near-extinct.',
                 image:"04_Abrustine.jpg",
-                desc:"Full desc"},
+                desc:"Full desc"
+            },
             {
                 id:5, 
                 title:"Grape_Rebo",
                 name:"Rebo",
                 short_text:"Rebo is a dark-skinned crossing of Merlot.",
                 image:"05_Rebo.jpg",
-                desc:"Full desc"}
+                desc:"Full desc"
+            }
         ],
         product:{},
         cart:[],
@@ -57,44 +61,49 @@ var app = new Vue({
         },
 
         addToCart:function(id){
-            var cart =[];
-            if(window.localStorage.getItem('cart')){
-                cart=window.localStorage.getItem('cart').split(',');
-            }
-            if(cart.indexOf(String(id))==-1){
-                cart.push(id);
-                window.localStorage.setItem('cart',cart.join());
+            if(this.cart.indexOf(id) == -1){
+                this.cart.push(id);
+                window.localStorage.setItem('cart', this.cart.join());
                 this.btnVisible=true;
             }
         },
-
-        checkInCart:function(){
-            if(this.product && this.product.id && window.localStorage.getItem('cart').split(',').indexOf(String(this.product.id))!=-1) this.btnVisible=true
-        },
-        
-        getCart:function(id){
-            var cartIds = [];
-            cartIds =  localStorage.getItem('cart').split(','); // получаем id товаров из localStorage
-            console.log(typeof cartIds);
-            cartIds.forEach(function(id) {
-                console.log("cartIds started");
-                var product = products.find(function(item) {
-                return item.id === id;
-                });
-
-                if (product) {
-                cart.push(product);
+        checkInCart: function() {
+            if (this.product && this.product.id) {
+              var cart = localStorage.getItem('cart');
+              if (cart) {
+                var cartIds = cart.split(',');
+                if (cartIds.indexOf(String(this.product.id)) !== -1) {
+                  this.btnVisible = true;
                 }
-                console.log("cartIds end");
-            });
-            console.log(cart);
+              }
+            }
+          },
+          
+          getCart: function() {
+            var cart = [];
+            var cartIds = localStorage.getItem('cart');
+            if (cartIds) {
+              cartIds = cartIds.split(',');
+              for (var i = 0; i < cartIds.length; i++) {
+                var product = this.products.find(function(item) {
+                  return item.id === parseInt(cartIds[i]);
+                });
+                if (product) {
+                  cart.push(product);
+                }
+              }
+            }
+            return cart;
+          },
+          
+          clearStorage: function() {
+            localStorage.removeItem('cart');
+            this.cart = [];
+            this.btnVisible = false;
+          },
         },
-        clearStorage:function(){
-            localStorage.clear();
+        mounted: function(){
+            this.getProduct();
+            this.checkInCart();
         }
-    },
-    mounted: function(){
-        this.getProduct();
-        this.checkInCart();
-    }
 })

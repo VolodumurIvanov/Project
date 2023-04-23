@@ -647,7 +647,27 @@ div.tomato_one_style{
     width: 100%;
     height: auto;
 }
+.cart_table{
+    width: 95%;
+    text-align: center;
+    border: 2px solid #324950;
+    margin-right: 4%;
+    margin-top: 5%;
 
+    font-size: 19px;
+}
+.cart_caption{
+    font-size: 34px;
+    color: #324950;
+}
+table.cart_table td,
+table.cart_table th{
+    border: 2px solid #324950;
+}
+.cart_table_content_img{
+    max-width: 150px;
+    max-height: 33%;
+}
 .contact_us_form_first_colum {
     display: block;
     width: 27.3%;
@@ -662,6 +682,10 @@ div.tomato_one_style{
     font-size: 17px;
     color: #324950;
     margin-bottom: 10.5px;
+}
+.contact_us_form_text_alt{
+    font-size: 18px;
+    font-weight: 600;
 }
 .contact_us_form_input,
 .contact_us_form_textarea,

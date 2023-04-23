@@ -45,11 +45,28 @@ var app = new Vue({
         ],
         product: {},
         cart: [],
+        contactFields:[
+            {
+                name:'',
+                company_name:'',
+                position:'',
+                city:'',
+                country:'',
+                telephone:'',
+                email:'',
+                you_are_a:'',
+                specify:'',
+                interested:''
+            }
+        ],
+        isOrderPlaced: false,
         btnVisible: false
     },
     methods: {
 
         getProduct: function() {
+            console.log("getProduct started");
+
             if (window.location.hash) {
                 var id = window.location.hash.replace('#','');
                 if (this.products && this.products.length > 0) {
@@ -60,9 +77,12 @@ var app = new Vue({
                     }
                 }
             }
+            console.log("getProduct end");
         },
 
         addToCart: function(id) {
+            console.log("addToCart started");
+
             var cart = [];
             if (window.localStorage.getItem('cart')) {
                 cart = window.localStorage.getItem('cart').split(',');
@@ -72,40 +92,74 @@ var app = new Vue({
                 window.localStorage.setItem('cart', cart.join());
                 this.btnVisible = true;
             }
+            console.log("addToCart end");
+
         },
 
         checkInCart: function() {
+            console.log("checkInCart started");
             if (this.product && this.product.id && window.localStorage.getItem('cart').split(',').indexOf(String(this.product.id)) != -1) {
                 this.btnVisible = true;
             }
+            console.log("checkInCart end");
+
         },
         
         getCart: function(id) {
-            var cartIds = [];
-            cartIds = localStorage.getItem('cart').split(','); // получаем id товаров из localStorage
-            var cart = [];
+            var cartIds = localStorage.getItem('cart');
+            console.log("getCart started");
             console.log(typeof cartIds);
-            cartIds.forEach(function(id) {
-                console.log("cartIds started");
-                var product = products.find(function(item) {
-                    return item.id === id;
+            if (cartIds) {
+              cartIds = cartIds.split(',');
+              var cart = [];
+              for (var i = 0; i < cartIds.length; i++) {
+                var product = this.products.find(function(item) {
+                  return item.id === parseInt(cartIds[i]);
                 });
 
                 if (product) {
-                    cart.push(product);
+                  cart.push(product);
                 }
-                console.log("cartIds end");
-            });
-            console.log(cart);
+              }
+              console.log(cart);
+              this.cart = cart;
+              console.log("getCart end"); 
+            }         
         },
-        clearStorage: function() {
-            localStorage.clear();
+        removeFromCart: function(id) {
+            console.log("removeFromCart started");
+            var index = this.cart.findIndex(function(item) {
+                return item.id === id;
+            });
+
+            if (index !== -1) {
+                this.cart.splice(index, 1);
+                window.localStorage.setItem('cart', this.cart.map(function(item) {
+                    return item.id;
+                }).join());
+            }
+
+            if (window.localStorage.getItem('cart').split(',').indexOf(String(id)) === -1) {
+                this.btnVisible = false;
+            }
+
+            console.log("removeFromCart end");
+        },
+        makeOrder() {
+            console.log('Order placed!');
+            
+            localStorage.removeItem('cart');
+            this.cart = [];
+            this.btnVisible = false;
+      
+            this.isOrderPlaced = true;
         }
     },
     mounted: function() {
-        console.log("Mounted");
+        console.log("Start mounted");
         this.getProduct();
         this.checkInCart();
         this.getCart();
+        console.log("End mounted");
     }
 });

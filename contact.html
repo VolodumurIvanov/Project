@@ -15,7 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
     
 </head>
-<body class="contact_us_style">
+<body class="contact_us_style" >
     <header class="header_alt">
         <nav class="header_container _container_alt">    
             <div class="cont_logo">
@@ -44,68 +44,108 @@
 
     <img class="contact_us_bg" src="images/png/contact_us_bg.jpg">
     
-    <nav class="_container_alt">
+    <nav class="_container_alt" id="app">
         <div class="contact_us_vision">
             <p class="contact_us_vision_text1 __text_preset_1">Contact us</p>
             <img class="contact_us_vision_img1" src="images/png/img_vision.png">
         </div> 
-        <form class="contact_us_form">
+        <div class="The_cart __text_preset_1" v-if="cart.length > 0">
+            <p class="cart_caption">The cart</p>
+            <table  class="cart_table">
+                <tr>
+                    <th>Photo</th>
+                    <th>Product Name </th>
+                    <th>Description</th>
+                    <th>Delete</th>
+                </tr>
+                <tr v-for="c in cart" > 
+                    <td><img :src="'images/grapes_img/'+c.image" class="cart_table_content_img"></td>
+                    <td> {{c.name}} </td>
+                    <td> {{c.short_text}} </td>
+                    <td><a href="#" @click.prevent="removeFromCart(c.id)">X</a></td>
+                </tr>
+            </table>
+        </div>
+        <nav>
+            <form class="contact_us_form" v-if="!isOrderPlaced" @submit.prevent="makeOrder">
            
-            <div class="contact_us_form_first_colum">
-                <p class="contact_us_form_text __text_preset_2">Name*</p>
-                <input class="contact_us_form_input" type="text">
-    
-                <p class="contact_us_form_text __text_preset_2">Company Name</p>
-                <input class="contact_us_form_input" type="text">
-    
-                
-                <p class="contact_us_form_text __text_preset_2">Position</p>
-                <input class="contact_us_form_input" type="text">
+                <div class="contact_us_form_first_colum">
+                    <p class="contact_us_form_text __text_preset_2">Name*</p>
+                    <input class="contact_us_form_input" type="text" required v-model="contactFields.name">
         
-                
-                <p class="contact_us_form_text __text_preset_2">City</p>
-                <input class="contact_us_form_input" type="text">
-                            
-                
-                <p class="contact_us_form_text __text_preset_2">Country</p>
-                <input class="contact_us_form_input" type="text">
-                            
-                
-                <p class="contact_us_form_text __text_preset_2">Telephone</p>
-                <input class="contact_us_form_input" type="text">
-                
-                <p class="contact_us_form_text __text_preset_2">Email*</p>
-                <input class="contact_us_form_input" type="email">
-    
-            </div>
-             
-             
-             <div class="contact_us_form_second_colum">
-                
-                <p class="contact_us_form_text __text_preset_2">You are a</p>
-                <select class="contact_us_form_select" value="seed producer">
-                    <option value="seed producer"></option>
-                </select>
+                    <p class="contact_us_form_text __text_preset_2">Company Name</p>
+                    <input class="contact_us_form_input" type="text" v-model="contactFields.company_name">
         
-                            
-                <p class="contact_us_form_text __text_preset_2">If other, please specify</p>
-                <input class="contact_us_form_input" type="text">
+                    
+                    <p class="contact_us_form_text __text_preset_2">Position</p>
+                    <input class="contact_us_form_input" type="text" v-model="contactFields.position">
+            
+                     
+                    <p class="contact_us_form_text __text_preset_2">City</p>
+                    <input class="contact_us_form_input" type="text" v-model="contactFields.city">
+                                
+                    
+                    <p class="contact_us_form_text __text_preset_2">Country</p>
+                    <input class="contact_us_form_input" type="text" v-model="contactFields.country">
+                                
+                    
+                    <p class="contact_us_form_text __text_preset_2">Telephone</p>
+                    <input class="contact_us_form_input" type="text" v-model="contactFields.telephone">
+                    
+                    <p class="contact_us_form_text __text_preset_2">Email*</p>
+                    <input class="contact_us_form_input" type="email" required v-model="contactFields.email">
         
-                            
-                <p class="contact_us_form_text __text_preset_2">You are interested in</p>
-                <textarea class="contact_us_form_textarea" cols="60" rows="25" ></textarea>
-        
-                
-                <p class="contact_us_form_text __text_preset_2">Please type this code</p>
-                <div class="contact_us_form_second_colum_last_row">
-                    <img class="contact_us_form_img1" src="images/png/contact_us_capha.png">
-                    <input class="contact_us_form_input_alt" type="text">
-                    <button class="contact_us_form_btn __text_preset_1">Send Message</button>    
                 </div>
-             </div>
-                        
-        </form> 
+                 
+                 
+                 <div class="contact_us_form_second_colum">
+                    
+                    <p class="contact_us_form_text __text_preset_2">You are a</p>
+                    <select class="contact_us_form_select" v-model="contactFields.you_are_a">
+                        <option value="seed producer">Seed producer</option>
+                    </select>
+            
+                                
+                    <p class="contact_us_form_text __text_preset_2">If other, please specify</p>
+                    <input class="contact_us_form_input" type="text" v-model="contactFields.specify">
+            
+                                
+                    <p class="contact_us_form_text __text_preset_2">You are interested in</p>
+                    <textarea class="contact_us_form_textarea" cols="60" rows="25" v-model="contactFields.interested"></textarea>
+            
+                    
+                    <p class="contact_us_form_text __text_preset_2">Please type this code</p>
+                    <div class="contact_us_form_second_colum_last_row">
+                        <img class="contact_us_form_img1" src="images/png/contact_us_capha.png">
+                        <input class="contact_us_form_input_alt" type="text">
+                        <button class="contact_us_form_btn __text_preset_1">Send Message</button>    
+                    </div>
+                 </div>
+                            
+            </form> 
+            
+            <form class="contact_us_form" v-else>
+           
+                <div class="contact_us_form_first_colum">
+                    <p class="contact_us_form_text_alt __text_preset_2">Name: {{contactFields.name}}</p>
+                    <p class="contact_us_form_text_alt __text_preset_2">Company Name: {{contactFields.company_name}}</p>        
+                    <p class="contact_us_form_text_alt __text_preset_2">Position: {{contactFields.position}}</p>            
+                    <p class="contact_us_form_text_alt __text_preset_2">City: {{contactFields.city}}</p>
+                    <p class="contact_us_form_text_alt __text_preset_2">Country: {{contactFields.country}}</p>
+                    <p class="contact_us_form_text_alt __text_preset_2">Telephone: {{contactFields.telephone}}</p>
+                    <p class="contact_us_form_text_alt __text_preset_2">Email: {{contactFields.email}} </p>
+                </div>
+                
+                
+                <div class="contact_us_form_second_colum">
+                    <p class="contact_us_form_text_alt __text_preset_2">You are a: {{contactFields.you_are_a}}</p>             
+                    <p class="contact_us_form_text_alt __text_preset_2">If other, please specify: {{contactFields.specify}}</p>
+                    <p class="contact_us_form_text_alt __text_preset_2">You are interested in: {{contactFields.interested}}</p>                    
+                </div>
+                            
+             </form> 
     
+        </nav>
         <div class="contact_us_restangle">
             <p class="contact_us_restangle_text_alt">Our Address</p>
             <p class="contact_us_restangle_text __text_preset_1">AGRIDERA Seeds & Agriculture Ltd. <br>
@@ -146,5 +186,6 @@
             <p>AGRIDERA SEEDS & AGRICULTURE LTD. © 2020</p>
         </div>
     </footer>
+<script src="js/__Main(v2.0).js"></script>
 </body>
 </html>

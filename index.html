@@ -14,18 +14,7 @@
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="manifest" href="/manifest.json">
 
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker
-                .register('/sw.js')
-                .then(function () {
-                    console.log('Service worker registered!');
-                });
-        }
-        else {
-            console.log('Service worker not registered!')
-        }
-    </script>
+    <script src="js/push_mess.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.7.8/dist/vue.js"></script>
 
 </head>
@@ -61,9 +50,7 @@
         <img class="img_bg" src="images/png/bg.png">
         <div class="main_middle_caption _container">
             <h1 class="head_text __text_preset_1">Agridera Seeds and Agriculture Ltd</h1>
-            <button class="head_button __text_preset_3">
-                <p>READ MORE</p>
-            </button>
+            <button class="subscribe-for-push">SUBSCRIBE FOR PUSH NOTIFICATIONS</button>
         </div>
     </div>
     <middle>
@@ -183,7 +170,6 @@
             <p>AGRIDERA SEEDS & AGRICULTURE LTD. © 2020</p>
         </div>
     </footer>
-
 </body>
 
 </html>

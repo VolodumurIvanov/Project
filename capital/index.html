@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capital of Europe</title>
+
+    <style>
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+        }
+
+        li {
+            border: 1px solid black;
+            padding: 4%;
+            margin: 0 auto;
+            width: 40%;
+        }
+
+        li,
+        h2 {
+            font-size: 50px;
+            font-weight: 800;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>List capital of Europe</h2>
+    <ul id="list"></ul>
+    <script>
+        fetch('https://restcountries.com/v3.1/region/europe')
+            .then(resolve => resolve.json())
+            .then(data => {
+                const caplist = document.getElementById('list')
+                data.forEach(country => {
+                    const cap = country.capital[0];
+                    const icap = document.createElement('li');
+                    icap.textContent = cap;
+                    caplist.appendChild(icap);
+                });
+            })
+    </script>
+</body>
+
+</html>
